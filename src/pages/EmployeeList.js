@@ -203,7 +203,10 @@ const EmployeeList = () => {
         return (
             <div key={emp.id} className="employee-card-mobile">
                 <div className="employee-card-header">
-                    <h5 className="employee-name">{emp.name}</h5>
+                    <div className="d-flex align-items-center">
+                        <h5 className="employee-name mb-0">{emp.name}</h5>
+                        <span className="ms-2 badge bg-secondary">ID: {emp.id}</span>
+                    </div>
                     <button 
                         className="mobile-action-toggle"
                         onClick={() => toggleMobileActionMenu(emp.id)}
@@ -248,7 +251,9 @@ const EmployeeList = () => {
                     )}
                 </div>
                 <div className="employee-card-content">
+                    <p className="employee-name">{emp.name}</p>
                     <p className="employee-rfid">RFID: {emp.rfid}</p>
+                    <p className="id">ID:{emp.id}</p>
                     <span className="employee-role">Worker</span>
                     
                     {/* Quick action buttons for mobile */}
@@ -313,8 +318,8 @@ const EmployeeList = () => {
                                                 <div className="employee-card-body">
                                                     <h5 className="employee-name">{emp.name}</h5>
                                                     <p className="employee-email">RFID: {emp.rfid}</p>
-                                                    <span className="employee-role">Worker</span>
-                                                    
+                                                    <p className="employee-id">ID: {emp.id}</p>
+                                                    <span className="employee-role">Worker</span>                                          
                                                     <div className="employee-actions">
                                                         <button 
                                                             className="employee-action-btn edit"

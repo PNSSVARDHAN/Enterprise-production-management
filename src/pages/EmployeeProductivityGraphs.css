@@ -24,6 +24,8 @@
 .card.shadow-sm {
   padding: 24px !important;
   margin-bottom: 25px;
+  overflow: visible !important; /* Don't hide overflowing content */
+  position: relative;
 }
 
 /* Chart title styling */
@@ -151,6 +153,113 @@
   margin: 2rem 0;
 }
 
+/* Chart controls styling */
+.chart-controls {
+  background-color: rgba(245, 247, 250, 0.7);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Empty state for charts */
+.chart-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: #6c757d;
+  font-weight: 500;
+  background-color: rgba(245, 247, 250, 0.5);
+  border-radius: 8px;
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+/* Pagination styling */
+.pagination {
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.pagination .page-item .page-link {
+  border-radius: 6px;
+  margin: 0 2px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #4361ee;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: rgba(67, 97, 238, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #4361ee;
+  color: white;
+}
+
+/* Badge styling */
+.badge.bg-info {
+  background-color: rgba(13, 202, 240, 0.18) !important;
+  color: #0dcaf0;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-left: 10px;
+}
+
+.badge.bg-warning {
+  background-color: rgba(255, 193, 7, 0.2) !important;
+  color: #856404;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+/* Filter input styling */
+.form-control {
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  box-shadow: none;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: rgba(67, 97, 238, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+}
+
+/* Toggle button styling */
+.btn-outline-primary {
+  border-color: #4361ee;
+  color: #4361ee;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover, .btn-primary {
+  background-color: #4361ee;
+  border-color: #4361ee;
+  color: white;
+  box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+  border-radius: 8px;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .container-Graph {
@@ -167,6 +276,14 @@
   
   .text-center.text-primary {
     font-size: 2rem;
+  }
+
+  .chart-controls {
+    padding: 12px;
+  }
+  
+  .pagination .page-link {
+    padding: 0.4rem 0.6rem;
   }
 }
 
@@ -234,4 +351,402 @@ canvas {
 .row:empty {
   min-height: 300px;
   background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234361ee' fill-opacity='0.03'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40zm0-40h2l-2 2V0zm0 4l4-4h2l-6 6V4zm0 4l8-8h2L40 10V8zm0 4L52 0h2L40 14v-2zm0 4L56 0h2L40 18v-2zm0 4L60 0h2L40 22v-2zm0 4L64 0h2L40 26v-2zm0 4L68 0h2L40 30v-2zm0 4L72 0h2L40 34v-2zm0 4L76 0h2L40 38v-2zm0 4L80 0v2L42 40h-2zm4 0L80 4v2L46 40h-2zm4 0L80 8v2L50 40h-2zm4 0l28-28v2L54 40h-2zm4 0l24-24v2L58 40h-2zm4 0l20-20v2L62 40h-2zm4 0l16-16v2L66 40h-2zm4 0l12-12v2L70 40h-2zm4 0l8-8v2l-6 6h-2zm4 0l4-4v2l-2 2h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") center center;
+}
+
+/* Chart scroll container - improved with better scrolling indicators */
+.chart-scroll-container {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto !important; /* Force horizontal scrolling */
+  overflow-y: hidden;
+  padding-bottom: 15px;
+  position: relative; /* Important for correct positioning */
+  cursor: grab; /* Show a hand cursor to indicate scrolling */
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+}
+
+/* Set fixed width for charts with many data points to ensure scrolling */
+.chart-scroll-container[style*="--data-point-count"] canvas {
+  min-width: calc(30px * var(--data-point-count)) !important; /* Force minimum width based on data points */
+  height: 100% !important;
+}
+
+/* Ensure chart container doesn't restrict chart width */
+.chart-scroll-container > div {
+  width: max-content !important; /* Let content determine width */
+  min-width: 100%;
+}
+
+/* Make the scrollbar more visible and always appear */
+.chart-scroll-container::-webkit-scrollbar {
+  height: 12px;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  display: block !important;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #4361ee;
+  border-radius: 6px;
+  border: 3px solid #f0f0f0;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2540c2;
+}
+
+/* Always show scrollbar */
+.chart-scroll-container::-webkit-scrollbar-thumb {
+  visibility: visible !important;
+}
+
+/* Direct style for charts with many data points */
+.chart-scroll-container[style*="width"] {
+  overflow-x: scroll !important;
+}
+
+/* Fix for Safari and Firefox */
+@supports (-moz-appearance:none) {
+  .chart-scroll-container {
+    scrollbar-width: thin;
+    scrollbar-color: #4361ee #f0f0f0;
+  }
+}
+
+/* Chart instruction - make more prominent */
+.chart-instruction {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  background-color: rgba(67, 97, 238, 0.9);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+}
+
+/* Scroll animation */
+@keyframes pulse {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+/* Make the scrollbar more visible */
+.chart-scroll-container::-webkit-scrollbar {
+  height: 10px;
+  background-color: rgba(230, 235, 245, 0.6);
+  border-radius: 5px;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(67, 97, 238, 0.4);
+  border-radius: 5px;
+  border: 2px solid rgba(230, 235, 245, 0.6);
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(67, 97, 238, 0.6);
+}
+
+/* Shadow indicators on sides to show there's more content */
+.chart-scroll-container::before,
+.chart-scroll-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 15px; /* Match padding-bottom */
+  width: 15px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.chart-scroll-container::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.chart-scroll-container::after {
+  right: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.9) 100%);
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+/* Only show relevant shadow based on scroll position */
+.chart-scroll-container.scrolled-right::after {
+  opacity: 0;
+}
+
+.chart-scroll-container.scrolled-left::before {
+  opacity: 1;
+}
+
+/* Ensure cards have proper positioning for absolute elements */
+.card.shadow-sm {
+  position: relative;
+  overflow: visible !important; /* Don't hide overflowing content */
+}
+
+/* Make charts expand properly with many data points */
+.chart-scroll-container canvas {
+  height: 100% !important;
+}
+
+/* Adjust chart width based on data points */
+.chart-scroll-container[style*="--data-point-count"] canvas {
+  min-width: calc(100% + (var(--data-point-count, 10) - 10) * 25px) !important;
+}
+
+/* For charts with many data points (over 15) */
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 1"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 2"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 3"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 4"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 5"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 6"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 7"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 8"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 9"] canvas,
+.chart-scroll-container[style*="--data-point-count"][style*="--data-point-count: 10"] canvas {
+  min-width: 100% !important;
+}
+
+/* Pretty scrollbar */
+.chart-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(67, 97, 238, 0.3);
+  border-radius: 4px;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(67, 97, 238, 0.5);
+}
+
+/* Force scrollable behavior for horizontal bar charts */
+.chart-scroll-container canvas[data-type="bar"][data-indexAxis="y"] {
+  min-height: calc(30px * var(--data-point-count, 10)) !important;
+  max-height: 1000px !important;
+}
+
+/* Make scrollbar visible */
+.chart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(67, 97, 238, 0.3);
+}
+
+/* Make charts expand when there are many data points */
+.chart-scroll-container canvas {
+  height: 100% !important;
+  min-width: 100%;
+}
+
+/* For charts with many data points */
+.chart-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb {
+  background-color: rgba(67, 97, 238, 0.3);
+  border-radius: 4px;
+}
+
+.chart-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(67, 97, 238, 0.5);
+}
+
+/* Make scrollbar visible only when needed */
+.chart-scroll-container:not(:hover)::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+/* Ensure chart expands properly for high employee counts */
+@media (min-width: 992px) {
+  .chart-scroll-container {
+    /* Automatically adjust width based on data points */
+    min-width: calc(100% + (var(--data-point-count, 10) - 10) * 20px);
+    max-width: 1500px; /* Prevent excessive width */
+  }
+}
+
+/* Scrollable chart component styling */
+.scrollable-chart-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.scrollable-chart-container {
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 15px;
+}
+
+/* When we need to expand for many data points */
+.scrollable-chart-container[style*="width"] {
+  padding-right: 20px;
+}
+
+/* Scrollable chart instruction */
+.scroll-instruction {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  background-color: rgba(67, 97, 238, 0.9);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 30;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scroll-arrows {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  animation: bounceArrows 1.5s infinite;
+}
+
+@keyframes bounceArrows {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* Custom scrollbar styling */
+.scrollable-chart-container::-webkit-scrollbar {
+  height: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+.scrollable-chart-container::-webkit-scrollbar-thumb {
+  background-color: rgba(67, 97, 238, 0.6);
+  border-radius: 5px;
+  border: 2px solid #f5f5f5;
+}
+
+.scrollable-chart-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(67, 97, 238, 0.8);
+}
+
+/* Touch device support */
+@media (hover: none) {
+  .scrollable-chart-container {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .scroll-instruction {
+    bottom: 25px; /* Move up above scrollbar on touch devices */
+  }
+}
+
+/* Horizontal scroll container styling */
+.horizontal-scroll-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  padding-bottom: 15px;
+  -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+  scrollbar-width: auto; /* For Firefox */
+  scrollbar-color: #4361ee #f0f0f0; /* For Firefox */
+}
+
+/* Scrollbar styling for Chrome/Safari/Edge */
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 12px;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #4361ee;
+  border-radius: 6px;
+  border: 3px solid #f0f0f0;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb:hover {
+  background-color: #2540c2;
+}
+
+/* Scrollable chart component */
+.chart-scrollable-outer {
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  border-radius: 8px;
+  padding-bottom: 15px;
+  /* Force scrollbar to always appear */
+  scrollbar-width: auto;
+  scrollbar-color: #4361ee #f0f0f0;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Make scrollbar always visible in supported browsers */
+.chart-scrollable-outer::-webkit-scrollbar {
+  height: 14px;
+  display: block !important;
+  background-color: #f0f0f0;
+  border-radius: 7px;
+}
+
+.chart-scrollable-outer::-webkit-scrollbar-thumb {
+  background-color: #4361ee;
+  border-radius: 7px;
+  border: 3px solid #f0f0f0;
+  min-width: 30px;
+}
+
+.chart-scrollable-outer::-webkit-scrollbar-thumb:hover {
+  background-color: #2540c2;
+}
+
+/* Chart container */
+.chart-scrollable-inner {
+  min-height: 100%;
+}
+
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(67, 97, 238, 0.9);
+  color: white;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 20;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  animation: pulseRight 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes pulseRight {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
 }
