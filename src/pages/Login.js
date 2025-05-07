@@ -46,12 +46,11 @@ const Login = ({ setAuth }) => {
 
             {/* Login Box */}
             <div className="login-box p-4 rounded shadow-lg bg-white" style={{ width: "400px" }}>
-                <div className="text-center mb-4">
-                    <img 
-                        src="https://cutm.ac.in/wp-content/themes/centurion/images/logo.svg"
-                        alt="Centurion University Logo"
-                        style={{ width: "150px", height: "auto", marginBottom: "1rem" }}
-                    />
+                <div className="testing-notice mb-4">
+                    <strong>THE APPLICATION IS UNDER TESTING PHASE</strong> <br />
+                    Username: <b>test@gmail.com</b> <br />
+                    Password: <b>123456789</b> <br />
+                    Please enter the details to log in.
                 </div>
                 <h2 className="text-center mb-3">Welcome Back</h2>
                 <p className="text-center text-muted mb-4">Sign in to continue</p>
