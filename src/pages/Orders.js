@@ -14,6 +14,8 @@ const useNavbarState = () => {
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [activeFilter, setActiveFilter] = useState('live');
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderSteps, setOrderSteps] = useState([]);
   const [assignStep, setAssignStep] = useState(null);
@@ -33,6 +35,7 @@ const Orders = () => {
       .then((response) => {
         console.log(" Orders Progress Fetched:", response.data);
         setOrders(response.data);
+        setFilteredOrders(response.data); // Initialize filteredOrders
         setLoading(false);
       })
       .catch((error) => {
@@ -68,6 +71,7 @@ const Orders = () => {
       .then((response) => {
         console.log(response.data.message);
         setOrders(orders.filter((order) => order.id !== id));
+        setFilteredOrders(filteredOrders.filter((order) => order.id !== id)); // Update filteredOrders
       })
       .catch((error) => {
         console.error("❌ Error deleting order:", error);
@@ -118,6 +122,36 @@ const Orders = () => {
   const isMobileView = () => {
     return window.innerWidth <= 768;
   };
+
+  // Filter orders based on the selected filter
+  const filterOrders = (filter) => {
+    setActiveFilter(filter);
+    switch (filter) {
+      case 'completed':
+        setFilteredOrders(orders.filter(order => 
+          order.current_stage.toLowerCase() === 'ready for dispatch'
+        ));
+        break;
+      case 'live':
+        setFilteredOrders(orders.filter(order => 
+          order.current_stage.toLowerCase() !== 'ready for dispatch'
+        ));
+        break;
+      default:
+        setFilteredOrders(orders);
+        break;
+    }
+  };
+
+  // Update useEffect to set initial filtered orders
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  // Add new useEffect for filtering
+  useEffect(() => {
+    filterOrders('live');
+  }, [orders]);
 
   // Responsive card view of an order for mobile
   const renderOrderCard = (order) => {
@@ -229,6 +263,37 @@ const Orders = () => {
     );
   };
 
+  const FilterButtons = () => (
+    <div className="filter-buttons mb-4">
+      <div className="btn-group" role="group" aria-label="Order filters">
+        <button
+          type="button"
+          className={`btn ${activeFilter === 'live' ? 'btn-primary' : 'btn-outline-primary'}`}
+          onClick={() => filterOrders('live')}
+        >
+          <FaSpinner className="me-2" />
+          Live Orders
+        </button>
+        <button
+          type="button"
+          className={`btn ${activeFilter === 'completed' ? 'btn-primary' : 'btn-outline-primary'}`}
+          onClick={() => filterOrders('completed')}
+        >
+          <FaCheckCircle className="me-2" />
+          Completed
+        </button>
+        <button
+          type="button"
+          className={`btn ${activeFilter === 'all' ? 'btn-primary' : 'btn-outline-primary'}`}
+          onClick={() => filterOrders('all')}
+        >
+          <FaClipboardList className="me-2" />
+          All Orders
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className="container-fluid py-4">
       <div className="orders-container">
@@ -241,18 +306,21 @@ const Orders = () => {
           </div>
         ) : (
           <>
-            {orders.length === 0 ? (
+            {/* Add Filter Buttons */}
+            <FilterButtons />
+
+            {filteredOrders.length === 0 ? (
               <div className="alert alert-info rounded-3 border-0 shadow-sm">
                 <div className="d-flex align-items-center">
                   <FaClipboardList className="me-2" />
-                  <span>No orders found.</span>
+                  <span>No {activeFilter} orders found.</span>
                 </div>
               </div>
             ) : (
               <>
                 {/* Mobile view - cards */}
                 <div className="d-block d-md-none order-cards-container">
-                  {orders.map(order => renderOrderCard(order))}
+                  {filteredOrders.map(order => renderOrderCard(order))}
                 </div>
 
                 {/* Desktop view - table */}
@@ -270,7 +338,7 @@ const Orders = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {orders.map((order) => (
+                      {filteredOrders.map((order) => (
                         <tr key={order.id} className="order-row">
                           <td>{order.id}</td>
                           <td>{order.order_number}</td>
