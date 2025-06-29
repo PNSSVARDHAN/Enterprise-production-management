@@ -1,100 +1,127 @@
-# SMO-Frontend
+# 🚀 Enterprise-production-management Project Setup Guide
 
-A comprehensive React-based frontend for a Shop Management and Order tracking system designed to manage production workflows, employee assignments, and machine allocations.
+This guide explains how to install, configure, and run both the **Frontend** and **Backend** applications, and how to connect your  PostgreSQL database.
 
-![Logo](./src/assets/logo.png)
+---
 
-## Application Overview
+## 📁 Project Structure
 
-This application provides a complete solution for manufacturing businesses to manage their orders, track production processes, assign employees to various tasks, and monitor productivity metrics. The user-friendly interface offers both desktop and mobile responsive views for all key functionality.
+```
+/project-root
 
-## Key Features
+    ├── SMO-Frontend/        # [Frontend Source](https://github.com/PNSSVARDHAN/Enterprise-production-management)
+    ├── SMO-Backend/         # [Backend Source](https://github.com/PNSSVARDHAN/Enterprise-production-management.Backend)
 
-- **User Authentication**: Secure login and registration system
-- **Order Management**: Create, view, and track orders through the production process
-- **Employee Management**: Add, list, and assign employees to production tasks
-- **Machine Management**: Add and allocate machines for production tasks
-- **Production Tracking**: Monitor work progress and track order status
-- **Dashboard Analytics**: View key production metrics and performance indicators
-- **Responsive Design**: Optimized for both desktop and mobile devices
+```
 
-## Pages and Their Functions
+---
 
-### Authentication
+## 1️⃣ Frontend Setup
 
-- **Login (`/login`)**: User authentication page with email and password login
-- **Register (`/register`)**: New user registration page
+### 📌 Prerequisites
 
-### Dashboard
+- **Node.js** (LTS version) → [Download](https://nodejs.org/)
+- **Git** → [Download](https://git-scm.com/)
 
-- **Office Dashboard (`/office-dashboard`)**: Main dashboard showing production overview with key metrics including total orders, active orders, completed orders, employee status, and machine usage. Displays live task progress.
+### 📥 Clone the Repository
 
-![Dashboard](./screenshots/dashboard.png)
+```bash
+git clone https://github.com/PNSSVARDHAN/Enterprise-production-management
+cd SMO-Frontend
+```
 
-### Order Management
+### 📦 Install Dependencies
 
-- **Orders (`/orders`)**: View and manage all orders, including their status and progress. Allows deleting orders and viewing order steps.
+```bash
+npm install
+```
 
-![Orders](./screenshots/orders.png)
+### ⚡ Start the Frontend Server
 
-- **Create Order (`/create-order`)**: Form to create new production orders with product details and quantities.
+```bash
+npm start
+```
 
-![Order Creation](./screenshots/order%20creation.png)
+The frontend will be available at: [http://localhost:3000](http://localhost:3000)
 
-- **Order Tracking (`/order-tracking`)**: Track the progress of specific orders through different production stages.
+---
 
-### Employee Management
+## 2️⃣ Backend Setup
 
-- **Employee List (`/employees`)**: View and manage all employees in the system.
+### 📌 Prerequisites
 
-![Employee Management](./screenshots/employee%20management.png)
+Make sure you have the following installed:
 
-- **Add Employee (`/add-employee`)**: Form to add new employees to the system with their details and skills.
+- **Node.js** (LTS version) → [Download](https://nodejs.org/)
+- **Git** → [Download](https://git-scm.com/)
+- **PostgreSQL** (Database) → [Download](https://www.postgresql.org/download/)
 
-![Adding Employee](./screenshots/adding%20employee.png)
+### 📥 Clone the Repository
 
-- **Assign Employee (`/assign-employee`)**: Interface to assign employees to specific production tasks.
-- **Employee Productivity Graphs (`/productivity`)**: Visual analytics showing employee performance and productivity metrics.
+```bash
+git clone https://github.com/PNSSVARDHAN/Enterprise-production-management.Backend
+cd SMO-Backend
+```
 
-![Productivity Analysis](./screenshots/productivity%20analysis.png)
+### 📦 Install Dependencies
 
-### Machine Management
+```bash
+npm install
+```
 
-- **Add Machine (`/add-machine`)**: Form to add new machines to the inventory.
-- **Assign Machine (`/assign-machine`)**: Interface to allocate machines to specific production tasks.
+### 🛠️ Configure Environment Variables
 
-![Assigning Machine](./screenshots/assigning%20machine.png)
+Create a `.env` file in the root directory and add your database configurations:
 
-- **Machine Allocations (`/machine-allocations`)**: Overview of current machine assignments and availability.
+```env
+PORT=5000
+DB_HOST=localhost
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=your_db_name
+DB_PORT=5432
+```
 
-### Production Management
+Replace `your_db_user`, `your_db_password`, and `your_db_name` with your actual PostgreSQL credentials.
 
-- **Work Tracking (`/work-tracking`)**: Monitor and update progress on ongoing production tasks.
+### 📊 Run Database Migrations
 
-![Work Tracking](./screenshots/work%20tracking.png)
+Set up your database tables:
 
-- **Production Flow (`/production-flow`)**: Visual representation of the production process workflow.
+```bash
+npx sequelize-cli db:migrate
+```
 
-![Production Workflow](./screenshots/production%20workflow.png)
+(Optional) To add sample data, run:
 
-### User Management
+```bash
+npx sequelize-cli db:seed:all
+```
 
-- **Users Table (`/users`)**: Admin interface to manage system users and their permissions.
+### ⚡ Start the Backend Server
 
-![User Management](./screenshots/user%20management.png)
+```bash
+npx nodemon src/index.js
+```
 
-## Technical Information
+The backend API will be available at: [http://localhost:5000](http://localhost:5000)
 
-This project was built with:
-- React.js
-- React Router for navigation
-- Axios for API communication
-- Bootstrap for responsive styling
-- React Icons for UI elements
 
-## Getting Started
+## ✅ You're all set!
 
-1. Clone the repository
-2. Install dependencies with `npm install`
-3. Configure the API URL in the environment variables
-4. Start the development server with `npm start`
+This file ensures proper documentation for setting up the **Frontend**, **Backend**, and connecting your  database  on any system. 
+
+please do verify the config file in backend folder and check the both frontend and backend link in both the folders  
+
+---
+
+## 🌐 Need Hosting Help?
+
+If you want to host the site, I am open to guiding you. Feel free to contact me for assistance!
+
+---
+
+## 📬 Contact
+
+- [LinkedIn](https://www.linkedin.com/in/pnssrivardhan/)
+- [Email](mailto:pnssvardhan@gmail.com)
